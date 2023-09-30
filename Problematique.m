@@ -17,7 +17,7 @@ Jl  = 1; %N*m*s^2/rad
 Bl  = 1; %N*m*s^2/rad
 
 %% Matrice ABCD
-A = [[0 0 0 0]' [1 N*Jl+Jm/N Kb/(N*La) 0]' [0 Ki/(N*Jl + (Jm/N)) -Ra/La 0]' [0 0 1/La K/tau]'];
+A = [[0 0 0 0]' [1 N*Jl+Jm/N Kb/(N*La) 0]' [0 Ki/(N*Jl + (Jm/N)) -Ra/La 0]' [0 0 1/La -1/tau]'];
 B = [ 0 0 0 K/tau]';
 C = [1 0 0 0];
 D = [0];
