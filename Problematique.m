@@ -22,5 +22,5 @@ B = [ 0 0 0 K/tau]';
 C = [1 0 0 0];
 D = [0];
 [num,denum] = ss2tf(A,B,C,D)
-FTBF = tf(num,denum)
+FTBO = tf(num,denum)
 
