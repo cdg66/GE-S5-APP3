@@ -35,8 +35,8 @@ A_FTBF(4,:) = [(-K*Kp)/tau 0 0 -1/tau]';
 
 %% e fonction de transfert en boucle fermee
 B_FTBF = [0 0 0 (K*Kp)/tau]';
-[num_FTBF,denum_FBTF] = ss2tf(A_FTBF, B_FTBF, C, D);
-FBTF = tf(num_FTBF,denum_FTBF)
+[num_FTBF,denum_FTBF] = ss2tf(A_FTBF, B_FTBF, C, D);
+FTBF = tf(num_FTBF,denum_FTBF)
 
 %% f1 Reduction Physique
 
@@ -47,11 +47,11 @@ FBTF = tf(num_FTBF,denum_FTBF)
 [R,P,K] = residue(num_FTBF,denum_FTBF) %utiliser FTBO le gain DC est infini
 ratio = abs((R)./real(P))
 [numr, denumr] = residue(R(3:4),P(3:4),K) % prenre lui infini
-numr = numr*(dcgain(FBTF)/dcgain(num_FTBF,denum_FTBF)) %negliger etape de dcgain
+numr = numr*(dcgain(FTBF)/dcgain(num_FTBF,denum_FTBF)) %negliger etape de dcgain
 step(tf(num_FTBF,denum_FTBF),[0:1/1000:10]),hold;
 step(tf(numr,denumr),[0:1/1000:10]);
 
-%% g reponse FBTF a un step
+%% g reponse FTBF a un step
 figure;
 step(num_FTBF,denum_FTBF)
 
