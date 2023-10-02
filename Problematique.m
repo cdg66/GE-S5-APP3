@@ -60,6 +60,7 @@ step(FTBOr,[0:1/1000:10]);
 %% g reponse FTBF a un step
 figure;
 step(num_FTBF,denum_FTBF)
+title('')
 
 %% h E1
 load('donnees_moteur_2016.mat');
