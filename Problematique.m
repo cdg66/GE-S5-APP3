@@ -44,10 +44,10 @@ FBTF = tf(num_FBTF,denum_FBTF)
 %% f2 Reduction Numerique
 
 %reduction a une 2e ordre
-[R,P,K] = residue(num_FBTF,denum_FBTF)
+[R,P,K] = residue(num_FBTF,denum_FBTF) %utiliser FTBO le gain DC est infini
 ratio = abs((R)./real(P))
-[numr, denumr] = residue(R(3:4),P(3:4),K)
-numr = numr*(dcgain(FBTF)/dcgain(num_FBTF,denum_FBTF))
+[numr, denumr] = residue(R(3:4),P(3:4),K) % prenre lui infini
+numr = numr*(dcgain(FBTF)/dcgain(num_FBTF,denum_FBTF)) %negliger etape de dcgain
 step(tf(num_FBTF,denum_FBTF),[0:1/1000:10]),hold;
 step(tf(numr,denumr),[0:1/1000:10]);
 
