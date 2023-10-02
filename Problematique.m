@@ -50,6 +50,7 @@ FTBF = tf(num_FTBF,denum_FTBF)
 ratio = abs((R)./real(P))
 [numr, denumr] = residue(R(3:4),P(3:4),K) % prenre lui infini
 %numr = numr*(dcgain(FTBF)/dcgain(num_FTBF,denum_FTBF)) %negliger etape de dcgain
+figure;
 step(tf(num,denum),[0:1/1000:10]),hold;
 step(tf(numr,denumr),[0:1/1000:10]);
 
