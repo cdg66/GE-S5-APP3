@@ -1,6 +1,7 @@
 clc;
-close;
-clear all;
+clear;
+close all;
+
 
 %% constant
 Kp  = 0.318; %V/rad
@@ -16,19 +17,53 @@ N   = 0.1;
 Jl  = 1; %N*m*s^2/rad
 Bl  = 1; %N*m*s^2/rad
 
-%% Matrice ABCD FTBO
-A = [[0 0 0 0]' [1 -(Bm*N^2*Bl)/(N^2*Jl+Jm) Kb/(N*La) 0]' [0 (N*Ki)/(N^2*Jl+Jm) -Ra/La 0]' [0 0 1/La -1/tau]'];
+%% c Matrice ABCD FTBO
+A = [[0 0 0 0]' [1 -(Bl*N^2*Bl)/(N^2*Jl+Jm) -Kb/(N*La) 0]' [0 (N*Ki)/(N^2*Jl+Jm) -Ra/La 0]' [0 0 1/La -1/tau]'];
 B = [ 0 0 0 K/tau]';
 C = [1 0 0 0];
 D = [0];
-[num,denum] = ss2tf(A,B,C,D)
+
+%% e fonction de transfert en boucle ouverte 
+[num,denum] = ss2tf(A,B,C,D);
 FTBO = tf(num,denum)
+figure;
+pzmap(A,B,C,D);
 
 %% Matrice ABCD FTBF
 A_FBTF = A;
 A_FBTF(4,:) = [(-K*Kp)/tau 0 0 -1/tau]';
 
+%% e fonction de transfert en boucle fermee
 B_FBTF = [0 0 0 (K*Kp)/tau]';
-[num_FBTF,denum_FBTF] = ss2tf(A_FBTF, B_FBTF, C, D)
+[num_FBTF,denum_FBTF] = ss2tf(A_FBTF, B_FBTF, C, D);
 FBTF = tf(num_FBTF,denum_FBTF)
- 
+
+%% f1 Reduction Physique
+
+
+%% f2 Reduction Numerique
+[R,P,K] = residue(num,denum);
+ratio = abs((R)./real(P));
+[numr, denumr] = residue(R(2:3),P(2:3),K);
+numr = numr*(dcgain(FTBO)/dcgain(numr,denumr));
+figure;
+step(num,denum),hold;
+step(numr,denumr);
+
+%% g reponse FBTF a un step
+figure;
+step(num_FBTF,denum_FBTF)
+
+%% h E1
+load('donnees_moteur_2016.mat');
+acceleration = diff(vitesse)./diff(t);
+d3 = diff(acceleration)./diff(t(1:4000));
+mX = [d3, acceleration(1:3999), vitesse(1:3999) ];
+out = pinv(mX)*tension(1:3999)
+figure;
+plot(t(1:4000),vitesse(1:4000)), hold on;
+plot(t(1:4000), acceleration);
+%% h E2
+V = 8; %V
+Tm = 0.52; %Nm
+Ia = 1.09; %A
