@@ -50,8 +50,9 @@ FTBF = tf(num_FTBF,denum_FTBF)
 ratio = abs((R)./real(P))
 [numr, denumr] = residue(R(3:4),P(3:4),K) % prenre lui infini
 %numr = numr*(dcgain(FTBO)/dcgain(num_FTBO,denum_FTBO)) %negliger etape de dcgain
+
+FTBOr = tf(numr,denumr)
 figure;
-FTBOr = tf(num,denum)
 step(FTBOr,[0:1/1000:10]),hold;
 step(FTBOr,[0:1/1000:10]);
 
@@ -62,13 +63,13 @@ step(num_FTBF,denum_FTBF)
 
 %% h E1
 load('donnees_moteur_2016.mat');
-acceleration = diff(vitesse)./diff(t);
-d3 = diff(acceleration)./diff(t(1:4000));
-mX = [d3, acceleration(1:3999), vitesse(1:3999) ];
-out = pinv(mX)*tension(1:3999)
-figure;
-plot(t(1:4000),vitesse(1:4000)), hold on;
-plot(t(1:4000), acceleration);
+% acceleration = diff(vitesse)./diff(t);
+% d3 = diff(acceleration)./diff(t(1:4000));
+% mX = [d3, acceleration(1:3999), vitesse(1:3999) ];
+% out = pinv(mX)*tension(1:3999)
+% figure;
+% plot(t(1:4000),vitesse(1:4000)), hold on;
+% plot(t(1:4000), acceleration);
 %% h E2
 V = 8; %V
 Tm = 0.52; %Nm
