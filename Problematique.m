@@ -18,7 +18,7 @@ Jl  = 1; %N*m*s^2/rad
 Bl  = 1; %N*m*s^2/rad
 
 %% c Matrice ABCD FTBO
-A = [[0 0 0 0]' [1 (N*Bl-Bm/N)/(Jm/N+Jl*N) -Kb/(N*La) 0]' [0 Ki/(Jm/N+Jl*N) -Ra/La 0]' [0 0 1/La -1/tau]'];
+A = [[0 0 0 0]' [1 (-N*Bl-Bm/N)/(Jm/N+Jl*N) -Kb/(N*La) 0]' [0 Ki/(Jm/N+Jl*N) -Ra/La 0]' [0 0 1/La -1/tau]'];
 B = [ 0 0 0 K/tau]';
 C = [1 0 0 0];
 D = [0];
