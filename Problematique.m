@@ -42,13 +42,14 @@ FBTF = tf(num_FBTF,denum_FBTF)
 
 
 %% f2 Reduction Numerique
-[R,P,K] = residue(num,denum);
-ratio = abs((R)./real(P));
-[numr, denumr] = residue(R(2:3),P(2:3),K);
-numr = numr*(dcgain(FTBO)/dcgain(numr,denumr));
-figure;
-step(num,denum),hold;
-step(numr,denumr);
+
+%reduction a une 2e ordre
+[R,P,K] = residue(num_FBTF,denum_FBTF)
+ratio = abs((R)./real(P))
+[numr, denumr] = residue(R(3:4),P(3:4),K)
+numr = numr*(dcgain(FBTF)/dcgain(num_FBTF,denum_FBTF))
+step(tf(num_FBTF,denum_FBTF),[0:1/1000:10]),hold;
+step(tf(numr,denumr),[0:1/1000:10]);
 
 %% g reponse FBTF a un step
 figure;
