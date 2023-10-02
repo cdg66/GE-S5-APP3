@@ -29,14 +29,14 @@ FTBO = tf(num,denum)
 figure;
 pzmap(A,B,C,D);
 figure;
-step(num,denum)
+impulse(ss(A,B,C,D))
 
 %% Matrice ABCD FTBF
 A_FTBF = A;
 A_FTBF(4,:) = [(-K*Kp)/tau 0 0 -1/tau]';
+B_FTBF = [0 0 0 (K*Kp)/tau]'; 
 
 %% e fonction de transfert en boucle fermee
-B_FTBF = [0 0 0 (K*Kp)/tau]';
 [num_FTBF,denum_FTBF] = ss2tf(A_FTBF, B_FTBF, C, D);
 FTBF = tf(num_FTBF,denum_FTBF)
 
@@ -49,10 +49,12 @@ FTBF = tf(num_FTBF,denum_FTBF)
 [R,P,K] = residue(num,denum) %utiliser FTBO le gain DC est infini
 ratio = abs((R)./real(P))
 [numr, denumr] = residue(R(3:4),P(3:4),K) % prenre lui infini
-%numr = numr*(dcgain(FTBF)/dcgain(num_FTBF,denum_FTBF)) %negliger etape de dcgain
+%numr = numr*(dcgain(FTBO)/dcgain(num_FTBO,denum_FTBO)) %negliger etape de dcgain
 figure;
-step(tf(num,denum),[0:1/1000:10]),hold;
-step(tf(numr,denumr),[0:1/1000:10]);
+FTBOr = tf(num,denum)
+step(FTBOr,[0:1/1000:10]),hold;
+step(FTBOr,[0:1/1000:10]);
+
 
 %% g reponse FTBF a un step
 figure;
