@@ -61,6 +61,12 @@ step(FTBOr,[0:1/1000:10]);
 figure;
 step(num_FTBF,denum_FTBF)
 title('')
+% reduction de la boulce ferme
+[R,P,K] = residue(num_FTBF,denum_FTBF) 
+ratio = abs((R)./real(P))
+[numr_f, denumr_f] = residue(R(3:4),P(3:4),K) % prenre lui infini
+numr_f = numr_f*(dcgain(FTBF)/dcgain(num_FTBF,denum_FTBF)) 
+FTBFr = tf(numr_f,denumr_f)
 
 %% h E1
 load('donnees_moteur_2016.mat');
