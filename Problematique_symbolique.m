@@ -3,19 +3,7 @@ clear;
 close all;
 
 
-%% constant
-Kp  = 0.318; %V/rad
-K   = 100;
-tau = 0.01; %s
-Ki  = 0.5; % N*m/A
-Kb  = 0.5; %V/rad/s
-Ra  = 8; %ohm
-La  = 0.008; % H
-Jm  = 0.02; %N*m*s^2/rad
-Bm  = 0.01; %N*m*s^2/rad
-N   = 0.1;
-Jl  = 1; %N*m*s^2/rad
-Bl  = 1; %N*m*s^2/rad
+syms Kp K tau Ki Kb Ra La Jm Bm N Jl Bl s
 
 %% c Matrice ABCD FTBO
 A = [[0 0 0 0]' [1 (-N*Bl-Bm/N)/(Jm/N+Jl*N) -Kb/(N*La) 0]' [0 Ki/(Jm/N+Jl*N) -Ra/La 0]' [0 0 1/La -1/tau]'];
@@ -40,6 +28,19 @@ B_FTBF = [0 0 0 (K*Kp)/tau]';
 [num_FTBF,denum_FTBF] = ss2tf(A_FTBF, B_FTBF, C, D);
 FTBF = tf(num_FTBF,denum_FTBF)
 
+%% constant
+Kp  = 0.318; %V/rad
+K   = 100;
+tau = 0.01; %s
+Ki  = 0.5; % N*m/A
+Kb  = 0.5; %V/rad/s
+Ra  = 8; %ohm
+La  = 0.008; % H
+Jm  = 0.02; %N*m*s^2/rad
+Bm  = 0.01; %N*m*s^2/rad
+N   = 0.1;
+Jl  = 1; %N*m*s^2/rad
+Bl  = 1; %N*m*s^2/rad
 %% f1 Reduction Physique
 
 
@@ -68,7 +69,7 @@ acceleration = diff(vitesse)./diff(t);
 % d3 = diff(acceleration)./diff(t(1:4000));
 mX = [ acceleration(1:4000), vitesse(1:4000) ];
 out = pinv(mX)*tension(1:4000)
-
+figure;
 % plot(t(1:4000),vitesse(1:4000)), hold on;
 % plot(t(1:4000), acceleration);
 %% h E2
@@ -77,10 +78,8 @@ Tm = 0.52; %Nm
 Ia = 1.09; %A
 
 k_exp = Tm/Ia;
-Ra_exp = V/Ia;
-RaJm = out(1)*k_exp;
-RaBm = (out(2)*k_exp)-k_exp^2;
-Jm = RaJm/Ra_exp;
-Bm = RaBm/Ra_exp;
+
+RaJm = out(1)*k_exp
+RaBm = (out(2)*k_exp)-k_exp^2
 
 
