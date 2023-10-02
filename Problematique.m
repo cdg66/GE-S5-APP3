@@ -18,7 +18,7 @@ Jl  = 1; %N*m*s^2/rad
 Bl  = 1; %N*m*s^2/rad
 
 %% c Matrice ABCD FTBO
-A = [[0 0 0 0]' [1 (N^2*Bl-Bm)/(N^2*Jl+Jm) -Kb/(N*La) 0]' [0 (N*Ki)/(N^2*Jl+Jm) -Ra/La 0]' [0 0 1/La -1/tau]'];
+A = [[0 0 0 0]' [1 (N*Bl-Bm/N)/(Jm/N+Jl*N) -Kb/(N*La) 0]' [0 Ki/(Jm/N+Jl*N) -Ra/La 0]' [0 0 1/La -1/tau]'];
 B = [ 0 0 0 K/tau]';
 C = [1 0 0 0];
 D = [0];
@@ -28,6 +28,8 @@ D = [0];
 FTBO = tf(num,denum)
 figure;
 pzmap(A,B,C,D);
+figure;
+step(num,denum)
 
 %% Matrice ABCD FTBF
 A_FTBF = A;
@@ -44,11 +46,11 @@ FTBF = tf(num_FTBF,denum_FTBF)
 %% f2 Reduction Numerique
 
 %reduction a une 2e ordre
-[R,P,K] = residue(num_FTBF,denum_FTBF) %utiliser FTBO le gain DC est infini
+[R,P,K] = residue(num,denum) %utiliser FTBO le gain DC est infini
 ratio = abs((R)./real(P))
 [numr, denumr] = residue(R(3:4),P(3:4),K) % prenre lui infini
-numr = numr*(dcgain(FTBF)/dcgain(num_FTBF,denum_FTBF)) %negliger etape de dcgain
-step(tf(num_FTBF,denum_FTBF),[0:1/1000:10]),hold;
+%numr = numr*(dcgain(FTBF)/dcgain(num_FTBF,denum_FTBF)) %negliger etape de dcgain
+step(tf(num,denum),[0:1/1000:10]),hold;
 step(tf(numr,denumr),[0:1/1000:10]);
 
 %% g reponse FTBF a un step
