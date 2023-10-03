@@ -41,7 +41,42 @@ B_FTBF = [0 0 0 (K*Kp)/tau]';
 FTBF = tf(num_FTBF,denum_FTBF)
 
 %% f1 Reduction Physique
+%%réduction physique
+%3e ordre
+num_r3 = num;
+denum_r3 = denum;
+denum_r3(1) = 0
 
+ 
+
+FTBO_r3 = tf(num_r3,denum_r3)
+figure(30);
+impulseplot(FTBO_r3,'r')
+
+ 
+
+%2e ordre
+num_r2 = num_r3;
+denum_r2 = denum_r3;
+denum_r2(2) = 0
+
+ 
+
+FTBO_r2 = tf(num_r2,denum_r2)
+figure(20);
+impulseplot(FTBO_r2,'y')
+
+ 
+
+%%all in
+figure;
+hold on;
+legend on;
+title('')
+impulse(FTBO);
+impulse(FTBO_r3);
+impulse(FTBO_r2);
+hold off
 
 %% f2 Reduction Numerique
 
