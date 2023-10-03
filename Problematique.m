@@ -53,8 +53,8 @@ ratio = abs((R)./real(P))
 
 FTBOr = tf(numr,denumr)
 figure;
-step(FTBOr,[0:1/1000:10]),hold;
-step(FTBOr,[0:1/1000:10]);
+impulse(FTBOr,[0:1/100:5]),hold on;
+impulse(FTBOr,[0:1/100:5]);
 
 
 %% g reponse FTBF a un step
@@ -84,10 +84,10 @@ Tm = 0.52; %Nm
 Ia = 1.09; %A
 
 k_exp = Tm/Ia;
-Ra_exp = V/Ia;
-RaJm = out(1)*k_exp;
-RaBm = (out(2)*k_exp)-k_exp^2;
-Jm = RaJm/Ra_exp;
-Bm = RaBm/Ra_exp;
+Ra_exp = V/Ia
+RaJm = out(1)*k_exp
+RaBm = (out(2)*k_exp)-k_exp^2
+Jm = RaJm/Ra_exp
+Bm = RaBm/Ra_exp
 
 
