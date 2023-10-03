@@ -42,6 +42,7 @@ FTBF = tf(num_FTBF,denum_FTBF)
 
 %% f1 Reduction Physique
 %%réduction physique
+%********* a changer entre les ***
 %3e ordre
 num_r3 = num;
 denum_r3 = denum;
@@ -77,7 +78,7 @@ impulse(FTBO);
 impulse(FTBO_r3);
 impulse(FTBO_r2);
 hold off
-
+%**************
 %% f2 Reduction Numerique
 
 %reduction a une 2e ordre
